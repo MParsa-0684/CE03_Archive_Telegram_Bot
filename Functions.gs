@@ -368,6 +368,22 @@ function sendTeacherData(teacherName, contents, column) {
   sendMessage(senderID, "نام استاد مورد نظر در لیست موجود نیست!");
 }
 
+function deleteProgram(senderID) {
+  var spreadSheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var weekSheet = spreadSheet.getSheetByName("week_program");
+  var data = weekSheet.getDataRange().getValues();
+
+  for (var j = 0; j < 7; j++) {
+    for (var i = 1; i < data.length; i++) {
+      if (data[i][j] !== "") {
+        weekSheet.getRange(i + 1, j + 1).clearContent();
+      }
+    }
+  }
+
+  sendMessage(senderID, "با موفقیت برنامه هفتگی کاملا پاک شد!");
+}
+
 function addWeekProgram(text, contents) {
   var regex = /([\s\S]+)-([\s\S]+)/;
   var senderID = contents.message.from.id;
@@ -389,8 +405,7 @@ function addWeekProgram(text, contents) {
       const lastRow = weekSheet.getRange(weekSheet.getMaxRows(), j + 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
 
       weekSheet.getRange(lastRow + 1, j + 1).setValue(match[2]);
-      sendMessage(senderID, "ددلاین شما با موفقیت اضافه شد!")
-      updateState(contents, null);
+      sendMessage(senderID, "ددلاین شما با موفقیت اضافه شد٬ همچنان میتوانید ددلاین اضافه کنید!")
       return;
     }
   }
@@ -543,3 +558,11 @@ function getTopic(contents) {
     }
   }
 }
+
+
+
+
+
+
+
+

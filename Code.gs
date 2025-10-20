@@ -1,5 +1,4 @@
 function myFunction() {
-
 }
 
 function doPost(e) {
@@ -40,7 +39,7 @@ function checkCommand(contents) {
       sendWeekProgram(contents)
       if (isAdmin(contents)) {
         updateState(contents, text);
-        sendMessage(contents.message.from.id, "(مخصوص ادمین های بات) میتوانید به فرمت زیر به برنامه ددلاین اضافه کنید:\nروز هفته-متن ددلاین")
+        sendMessage(contents.message.from.id, "(مخصوص ادمین های بات) میتوانید به فرمت زیر به برنامه ددلاین اضافه کنید:\nروز هفته-متن ددلاین\nیا جهت حذف کامل برنامه هفتگی از دستور 'حذف' استفاده کنید.");
       }
       break;
     
@@ -125,7 +124,12 @@ function checkBeforeCommand(contents) {
       break;
 
     case "/week_program":
-      addWeekProgram(text, contents);
+      if (text.trim() === "حذف") {
+        deleteProgram(senderID);
+      }
+      else {
+        addWeekProgram(text, contents);
+      }
       break;
     
     case "/courses_files":
